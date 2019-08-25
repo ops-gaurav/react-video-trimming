@@ -2,6 +2,7 @@
  * @desc this is the admin component of the application.
  * @author gaurav sharma
  */
+import Axios from 'axios';
 import React, { Component } from 'react';
 import {
 	Container,
@@ -15,7 +16,6 @@ import { connect } from 'react-redux';
 import Video from '../../components/Video';
 import { userLogin } from '../../redux/actions';
 import { toast, ToastContainer } from 'react-toastify';
-import FontAwesome from 'react-fontawesome';
 
 import './index.scss';
 
@@ -95,7 +95,7 @@ class LandingPage extends Component {
 				<Row>
 					<Col md={4} sm={3} xs={2}></Col>
 					<Col md={4} sm={6} xs={8}>
-						<Video />
+						<Video /><br/>
 					</Col>
 					<Col md={4} sm={3} xs={2}></Col>
 				</Row>

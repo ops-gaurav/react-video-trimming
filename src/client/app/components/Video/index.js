@@ -1,15 +1,42 @@
 // @flow
 import * as React from 'react';
+import moment from 'moment';
 import FontAwsome from 'react-fontawesome';
+import axios from 'axios';
 import './index.scss';
 
 export default () => {
 	let xPoint = 0;
-	let yPoint = 590;
+	let yPoint = 570;
 
 	const trimLimits = {
 		xPoint: 0,
-		yPoint: 0
+		yPoint: 0,
+		timeDiff: 0,
+	}
+
+	/**
+	 * trigger the trim video
+	 */
+	function triggerTrim() {
+		axios.post('http://localhost:3001/api/users/trim', trimLimits)
+			.then(success => {
+				const { data: { data, message }} = success;
+				console.log(data, message);
+				if (data) {
+					document.getElementById('download-link').style.display = 'block';
+					document.getElementById('download-link').innerHTML = `download ${data}.mp4`;
+					document.getElementById('download-link').onclick = () => {
+						window.open(`http://localhost:3001/api/users/download/${data}`, '_blank');
+						// document.getElementById('download-link').style.display = 'none';
+					}
+				}
+			}).catch(err => alert('Some error while sending trim request. Is Server running?'));
+	}
+
+	// download the trimmed video
+	function download() {
+		
 	}
 
 	function drag(event) {
@@ -47,6 +74,9 @@ export default () => {
 		const time = componentPosition * division;
 		// console.log(fancyTimeFormat(time));
 		trimLimits[data] = fancyTimeFormat(time);
+		const t1 = moment(trimLimits.xPoint, 'mm:ss')
+		const t2 = moment(trimLimits.yPoint, 'mm:ss')
+		trimLimits.timeDiff = moment.duration(t2.diff(t1)).asSeconds();
 		document.getElementById(`${data}Value`).innerHTML = trimLimits[data];
 		console.log(trimLimits);
 		document.getElementById(data).style.marginLeft = `${componentPosition}px`;
@@ -62,11 +92,8 @@ export default () => {
 				// document.getElementById("marker").getElementById('span').css("width", percentage+"%");
 			}}
 			onSeeked={(seek) => console.log(seek.timeStamp)} width={600} height={300} controls>
-			<source src='http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' type='video/mp4' />
+			<source src='https://ia800701.us.archive.org/26/items/SampleVideo1280x7205mb/SampleVideo_1280x720_5mb.mp4' type='video/mp4' />
 			Video not supported in this browser.
-		  <section className='trim-overlay'>
-				This is overlay
-		  </section>
 		</video>
 		<section
 			onDragOver={e => e.preventDefault()}
@@ -92,5 +119,8 @@ export default () => {
 				<FontAwsome name='caret-right' />&nbsp;&nbsp;<span className='time' id='yPointValue'>&nbsp;{trimLimits.yPoint}</span>
 			</span>
 		</section>
+		<br/>
+		<button onClick={triggerTrim} className='btn btn-primary'>Trim</button><br/>
+		<button id='download-link' className='btn btn-link'>Download</button>
 	</div>;
 }
