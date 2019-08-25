@@ -12,11 +12,10 @@ import {
 	Label
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import Video from '../../components/Video';
 import { userLogin } from '../../redux/actions';
 import { toast, ToastContainer } from 'react-toastify';
 import FontAwesome from 'react-fontawesome';
-
-import LoadingOverlay from '../../components/LoadingOverlay';
 
 import './index.scss';
 
@@ -96,27 +95,7 @@ class LandingPage extends Component {
 				<Row>
 					<Col md={4} sm={3} xs={2}></Col>
 					<Col md={4} sm={6} xs={8}>
-						<p className='text-center'>
-							<h2 className='logo-text'>PluginFactory ReactJS Scaffold</h2>
-						</p>
-						<section className='user-login' id='user-login'>
-							<Form>
-								<FormGroup>
-									<Label for="username">Username</Label><br/>
-									<input ref={userUname => this.userUname = userUname} className='custom-field login-field' placeholder='Username for user'/>
-								</FormGroup>
-								<FormGroup>
-									<Label for="username">Password</Label><br/>
-									<input ref={userPass => this.userPass = userPass} type='password' className='custom-field login-field' placeholder='Password for user'/>
-								</FormGroup>
-								<p className='text-center'>
-									<button className="litnite-btn" onClick={this.onLogin}>LOGIN&nbsp;&nbsp;&nbsp;<FontAwesome name="chevron-right"/></button>
-								</p>
-							</Form>
-							<br/><br/><br/>
-							<hr className='line-break'/>
-							<p className='text-center'>PluginFactory&copy;2019</p>
-						</section>
+						<Video />
 					</Col>
 					<Col md={4} sm={3} xs={2}></Col>
 				</Row>

@@ -1,0 +1,20 @@
+#marker {
+	cursor: pointer;
+	height: 10px;
+	outline: thin solid orange;
+	position: relative;
+	width: 600px;
+}
+#span {
+	background-color: orange;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 10px;
+	width: 0px;
+}
+.selectors {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
